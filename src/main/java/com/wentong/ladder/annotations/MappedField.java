@@ -1,5 +1,7 @@
 package com.wentong.ladder.annotations;
 
+import com.wentong.ladder.enums.MappedType;
+
 import java.lang.annotation.*;
 
 /**
@@ -19,4 +21,9 @@ public @interface MappedField {
      * 描述信息
      */
     String desc();
+
+    /**
+     * 映射类型
+     */
+    MappedType type();
 }
