@@ -23,12 +23,10 @@ public class AnnotationScanner {
             boolean classWithAnnotation = AnnotationUtil.hasAnnotation(clazz, MappedClass.class);
             if (classWithAnnotation) {
                 MappedField[] annotationsByType = clazz.getAnnotationsByType(MappedField.class);
-                if (annotationsByType.length > 0) {
-                    for (MappedField mappedField : annotationsByType) {
-                        String expression = mappedField.expression();
-                        String desc = mappedField.desc();
-                        System.out.println(StrUtil.format("expression: {}, desc: {}", expression, desc));
-                    }
+                for (MappedField mappedField : annotationsByType) {
+                    String expression = mappedField.expression();
+                    String desc = mappedField.desc();
+                    System.out.println(StrUtil.format("expression: {}, desc: {}", expression, desc));
                 }
 
             }
