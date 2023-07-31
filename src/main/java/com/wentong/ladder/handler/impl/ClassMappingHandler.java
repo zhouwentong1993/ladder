@@ -1,38 +1,81 @@
 package com.wentong.ladder.handler.impl;
 
-import cn.hutool.core.annotation.AnnotationUtil;
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.DynaBean;
-import com.wentong.ladder.annotations.MappedField;
+import cn.hutool.core.collection.CollUtil;
+import com.wentong.ladder.aviator.AviatorHelper;
 import com.wentong.ladder.enums.MappedType;
 import com.wentong.ladder.handler.MappingHandler;
+import com.wentong.ladder.registry.MappingRegistry;
 
 import java.lang.reflect.Field;
+import java.util.Map;
 
-public class ClassMappingHandler<S,T> implements MappingHandler<S,T> {
+public class ClassMappingHandler<S, T> implements MappingHandler<S, T> {
 
     @Override
     public T mapping(S source, Class<T> clz) {
-        return null;
+        try {
+            return mapping(source, (T) clz.getDeclaredConstructors()[0].newInstance());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     @Override
     public T mapping(S source, T target) {
         DynaBean dynaBean = DynaBean.create(target);
+        Map<String, Object> sourceMap = BeanUtil.beanToMap(source);
         Class<?> clazz = target.getClass();
-        Field[] fields = clazz.getFields();
-        for (Field field : fields) {
-            MappedField annotation = AnnotationUtil.getAnnotation(field, MappedField.class);
-            if (annotation != null) {
-                MappedType type = annotation.type();
-                String expression = annotation.expression();
-                switch (type) {
+        var mappingFieldWrappers = MappingRegistry.get(clazz);
+        if (CollUtil.isNotEmpty(mappingFieldWrappers)) {
+            mappingFieldWrappers.forEach(w -> {
+                MappedType mappedType = w.mappedType();
+                switch (mappedType) {
                     case EXPRESSION:
+                        dynaBean.set(w.refField().getName(), AviatorHelper.COMPILED_FUNCTION.apply(w.expression()).execute(sourceMap));
+                        break;
+                    case CONSTANT:
+                        convertStringToFieldType(w.refField(), w.expression(), dynaBean);
+                        break;
+                    case CONTEXT:
                         break;
                     default:
                         break;
                 }
-            }
+            });
         }
-        return null;
+        return dynaBean.getBean();
     }
+
+    private void convertStringToFieldType(Field field, String stringValue, DynaBean dynaBean) {
+        Class<?> fieldType = field.getType();
+
+        Object convertedValue = null;
+
+        if (fieldType == int.class || fieldType == Integer.class) {
+            convertedValue = Integer.parseInt(stringValue);
+        } else if (fieldType == long.class || fieldType == Long.class) {
+            convertedValue = Long.parseLong(stringValue);
+        } else if (fieldType == float.class || fieldType == Float.class) {
+            convertedValue = Float.parseFloat(stringValue);
+        } else if (fieldType == double.class || fieldType == Double.class) {
+            convertedValue = Double.parseDouble(stringValue);
+        } else if (fieldType == boolean.class || fieldType == Boolean.class) {
+            convertedValue = Boolean.parseBoolean(stringValue);
+        } else if (fieldType == String.class) {
+            convertedValue = stringValue;
+        }
+        // 可以根据需要添加其他数据类型的处理逻辑
+
+        // 如果无法处理该类型，则抛出异常或者使用默认值等处理方式
+        if (convertedValue == null) {
+            throw new IllegalArgumentException("Unsupported field type: " + fieldType.getName());
+        }
+
+        dynaBean.set(field.getName(), convertedValue); // 设置属性值
+
+    }
+
 }

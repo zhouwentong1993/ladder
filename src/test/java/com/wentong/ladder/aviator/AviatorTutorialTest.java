@@ -22,13 +22,13 @@ public class AviatorTutorialTest {
     void test1() throws IOException {
         final Function<String, Expression> COMPILE = AviatorEvaluator.getInstance()::compile;
 
-        log.info("start at:{}", System.currentTimeMillis());
+        long start = System.currentTimeMillis();
+        log.info("start at:{}", start);
+        Expression expression = AviatorEvaluator.getInstance().compileScript("examples/hello.av", true);
         for (int i = 0; i < 1000; i++) {
-            AviatorEvaluator.getInstance();
-            Expression expression = AviatorEvaluator.getInstance().compileScript("examples/hello.av", true);
             expression.execute();
         }
-        log.info("end at:{}", System.currentTimeMillis());
+        log.info("total:{}", System.currentTimeMillis() - start);
     }
 
     /**

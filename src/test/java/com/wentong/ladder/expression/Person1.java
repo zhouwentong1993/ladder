@@ -9,10 +9,10 @@ import lombok.Data;
 @Data
 public class Person1 {
 
-    @MappedField(expression = "name", desc = "姓名", type = MappedType.CONSTANT)
+    @MappedField(expression = "name", desc = "姓名", type = MappedType.EXPRESSION)
     private String name;
 
-    @MappedField(expression = "age", desc = "年龄", type = MappedType.CONSTANT)
+    @MappedField(expression = "1", desc = "年龄", type = MappedType.CONSTANT)
     private int age;
 
 }

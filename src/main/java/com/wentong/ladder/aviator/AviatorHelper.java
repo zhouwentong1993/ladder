@@ -19,7 +19,7 @@ public final class AviatorHelper {
     }
 
     // 缓存编译结果，提升性能
-    public static Function<String, Expression> COMPILE_FUNCTION = param -> INSTANCE.compile(param, true);
+    public static Function<String, Expression> COMPILED_FUNCTION = param -> INSTANCE.compile(param, true);
 
     // 执行
     public static BiFunction<String, Dict, Object> EXECUTE_FUNCTION = INSTANCE::execute;
