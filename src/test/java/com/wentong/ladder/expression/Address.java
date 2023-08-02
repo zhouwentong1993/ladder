@@ -12,10 +12,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Address {
 
-    @MappedField(expression = "address.city", desc = "姓名", type = MappedType.EXPRESSION)
+    @MappedField(expression = "address.city", desc = "城市", type = MappedType.EXPRESSION)
     private String city;
-    @MappedField(expression = "address.street", desc = "姓名", type = MappedType.EXPRESSION)
+    @MappedField(expression = "address.street", desc = "街道", type = MappedType.CONSTANT)
     private String street;
-
-
+    @MappedField(expression = "address.door", desc = "门", type = MappedType.EXPRESSION)
+    private Door door;
 }

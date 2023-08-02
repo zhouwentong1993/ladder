@@ -1,9 +1,6 @@
 package com.wentong.ladder.handler.impl;
 
-import com.wentong.ladder.expression.Address;
-import com.wentong.ladder.expression.Person1;
-import com.wentong.ladder.expression.Person3;
-import com.wentong.ladder.expression.RawObj;
+import com.wentong.ladder.expression.*;
 import com.wentong.ladder.handler.MappingHandler;
 import com.wentong.ladder.scaner.AnnotationScanner;
 import org.junit.jupiter.api.BeforeAll;
@@ -20,7 +17,7 @@ class ClassMappingHandlerTest {
         // init scanner
         AnnotationScanner annotationScanner = new AnnotationScanner();
         annotationScanner.scan("com.wentong.ladder");
-        rawObj = new RawObj("name1", null, 199, new Address("city1", "street1"));
+        rawObj = new RawObj("name1", null, 199, new Address("city1", "street1", new Door("前门", "后门")));
     }
 
     @Test
@@ -40,7 +37,9 @@ class ClassMappingHandlerTest {
         assertEquals("name1", p.getName());
         assertEquals(1, p.getAge());
         assertEquals("city1", p.getAddress().getCity());
-        assertEquals("street1", p.getAddress().getStreet());
+        assertEquals("address.street", p.getAddress().getStreet());
+        assertEquals("前门", p.getAddress().getDoor().getFrontDoor());
+        assertEquals("后门", p.getAddress().getDoor().getBackDoor());
     }
 
 }

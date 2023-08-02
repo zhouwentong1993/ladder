@@ -42,7 +42,7 @@ public class ClassMappingHandler<S, T> implements MappingHandler<S, T> {
                             try {
                                 dynaBean.set(w.refField().getName(), mapping(source, (Class<T>) w.refField().getType()));
                             } catch (Exception e) {
-                                throw new ClassInitException(e);
+                                throw new ClassInitException("Init class:" + clazz + ", field:" + w.refField().getName() + " failed!", e);
                             }
                         }
                         break;
