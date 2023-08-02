@@ -5,12 +5,14 @@ import cn.hutool.core.bean.DynaBean;
 import cn.hutool.core.collection.CollUtil;
 import com.wentong.ladder.aviator.AviatorHelper;
 import com.wentong.ladder.enums.MappedType;
+import com.wentong.ladder.exceptions.ClassInitException;
 import com.wentong.ladder.handler.MappingHandler;
 import com.wentong.ladder.registry.MappingRegistry;
 
 import java.lang.reflect.Field;
 import java.util.Map;
 
+@SuppressWarnings("unchecked")
 public class ClassMappingHandler<S, T> implements MappingHandler<S, T> {
 
     @Override
@@ -34,7 +36,15 @@ public class ClassMappingHandler<S, T> implements MappingHandler<S, T> {
                 MappedType mappedType = w.mappedType();
                 switch (mappedType) {
                     case EXPRESSION:
-                        dynaBean.set(w.refField().getName(), AviatorHelper.COMPILED_FUNCTION.apply(w.expression()).execute(sourceMap));
+                        if (w.refField().getType().isPrimitive() || w.refField().getType().equals(String.class)) {
+                            dynaBean.set(w.refField().getName(), AviatorHelper.COMPILED_FUNCTION.apply(w.expression()).execute(sourceMap));
+                        } else {
+                            try {
+                                dynaBean.set(w.refField().getName(), mapping(source, (Class<T>) w.refField().getType()));
+                            } catch (Exception e) {
+                                throw new ClassInitException(e);
+                            }
+                        }
                         break;
                     case CONSTANT:
                         convertStringToFieldType(w.refField(), w.expression(), dynaBean);

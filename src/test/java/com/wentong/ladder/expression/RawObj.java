@@ -8,4 +8,5 @@ public class RawObj {
     String name;
     String value;
     int age;
+    Address address;
 }
