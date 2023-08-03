@@ -1,0 +1,25 @@
+package $package;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import com.wentong.ladder.annotations.MappedClass;
+import com.wentong.ladder.annotations.MappedField;
+import com.wentong.ladder.enums.MappedType;
+
+/**
+ * Auto generated class.
+ * DO NOT MODIFY!!!
+ */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@MappedClass
+public class $className {
+
+    #foreach( $map in $list )
+    @MappedField(expression = "$map.expression", desc = "$map.desc", type = MappedType.$map.mappedType)
+    private $map.type $map.name;
+    #end
+
+}

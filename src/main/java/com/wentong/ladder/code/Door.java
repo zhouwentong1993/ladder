@@ -1,4 +1,4 @@
-package $package;
+package com.wentong.ladder.code;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,9 +15,9 @@ import com.wentong.ladder.enums.MappedType;
 @AllArgsConstructor
 @NoArgsConstructor
 @MappedClass
-public class $className {
-    #foreach( $map in $list )
-    @MappedField(expression = "$map.expression", desc = "$map.desc", type = MappedType.$map.mappedType)
-    private $map.type $map.name;
-    #end
+public class Door {
+    @MappedField(expression = "address.door.frontDoor", desc = "前门", type = MappedType.EXPRESSION)
+    private String frontDoor;
+    @MappedField(expression = "address.door.backDoor", desc = "后门", type = MappedType.EXPRESSION)
+    private String backDoor;
 }
