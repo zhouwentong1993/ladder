@@ -10,6 +10,7 @@ import com.wentong.ladder.handler.MappingHandler;
 import com.wentong.ladder.interceptor.LoggingMappingInterceptor;
 import com.wentong.ladder.interceptor.MappingInterceptor;
 import com.wentong.ladder.registry.MappingRegistry;
+import com.wentong.ladder.utils.ReflectUtil;
 
 import java.lang.reflect.Field;
 import java.util.Map;
@@ -27,7 +28,7 @@ public class ClassMappingHandler<S, T> implements MappingHandler<S, T> {
     @Override
     public T mapping(S source, Class<T> clz) {
         try {
-            return mapping(source, (T) clz.getDeclaredConstructors()[0].newInstance());
+            return mapping(source, (T) ReflectUtil.getNoArgsConstructor(clz).newInstance());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

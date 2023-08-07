@@ -35,5 +35,4 @@ public class HttpRequestConcreteStrategy implements HttpRequestStrategy {
             return response;
         }
     }
-
 }

@@ -12,8 +12,8 @@ import com.wentong.ladder.enums.MappedType;
  * DO NOT MODIFY!!!
  */
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @MappedClass
 public class $className {
 

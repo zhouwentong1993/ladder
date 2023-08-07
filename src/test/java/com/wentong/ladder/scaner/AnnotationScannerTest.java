@@ -12,7 +12,7 @@ class AnnotationScannerTest {
     @Test
     void scan() {
         AnnotationScanner annotationScanner = new AnnotationScanner();
-        annotationScanner.scan("com.wentong.ladder");
+        annotationScanner.scan();
         assertEquals(2, MappingRegistry.get(Person1.class).size());
         assertEquals(1, MappingRegistry.get(Person2.class).size());
     }

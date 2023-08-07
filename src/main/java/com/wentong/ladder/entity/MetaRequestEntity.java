@@ -3,10 +3,14 @@ package com.wentong.ladder.entity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * 映射对象元描述
+ */
 @Data
-public class MetaRequestEntity {
+public class MetaRequestEntity implements Serializable {
 
     private Long id;
     private String fieldName;

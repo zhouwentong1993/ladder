@@ -12,12 +12,14 @@ import com.wentong.ladder.enums.MappedType;
  * DO NOT MODIFY!!!
  */
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @MappedClass
 public class Door {
+
     @MappedField(expression = "address.door.frontDoor", desc = "前门", type = MappedType.EXPRESSION)
     private String frontDoor;
     @MappedField(expression = "address.door.backDoor", desc = "后门", type = MappedType.EXPRESSION)
     private String backDoor;
+
 }
