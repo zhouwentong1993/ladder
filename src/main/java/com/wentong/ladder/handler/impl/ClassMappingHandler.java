@@ -5,7 +5,7 @@ import cn.hutool.core.bean.DynaBean;
 import cn.hutool.core.collection.CollUtil;
 import com.wentong.ladder.aviator.AviatorHelper;
 import com.wentong.ladder.enums.MappedType;
-import com.wentong.ladder.exceptions.ClassInitException;
+import com.wentong.ladder.exceptions.ClassInitializeException;
 import com.wentong.ladder.handler.MappingHandler;
 import com.wentong.ladder.interceptor.LoggingMappingInterceptor;
 import com.wentong.ladder.interceptor.MappingInterceptor;
@@ -52,7 +52,7 @@ public class ClassMappingHandler<S, T> implements MappingHandler<S, T> {
                                 try {
                                     dynaBean.set(w.refField().getName(), mapping(source, (Class<T>) w.refField().getType()));
                                 } catch (Exception e) {
-                                    throw new ClassInitException("Init class:" + clazz + ", field:" + w.refField().getName() + " failed!", e);
+                                    throw new ClassInitializeException("Init class:" + clazz + ", field:" + w.refField().getName() + " failed!", e);
                                 }
                             }
                             break;
