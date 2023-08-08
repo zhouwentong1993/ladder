@@ -7,6 +7,6 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties(prefix = "ladder")
 public class LadderConfig {
 
-    public String ladderScanBasePackage = "com.wentong.ladder";
+    public String ladderScanBasePackage;
 
 }

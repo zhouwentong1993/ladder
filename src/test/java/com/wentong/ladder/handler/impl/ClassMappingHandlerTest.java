@@ -16,7 +16,7 @@ class ClassMappingHandlerTest {
     static void beforeAll() {
         // init scanner
         AnnotationScanner annotationScanner = new AnnotationScanner();
-        annotationScanner.scan();
+        annotationScanner.scan("com.wentong.ladder");
         rawObj = new RawObj("name1", null, 199, new Address("city1", "street1", new Door("前门", "后门")));
     }
 

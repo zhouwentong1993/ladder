@@ -2,6 +2,7 @@ package com.wentong.ladder.scaner;
 
 import cn.hutool.core.annotation.AnnotationUtil;
 import cn.hutool.core.util.ClassUtil;
+import com.google.common.annotations.VisibleForTesting;
 import com.wentong.ladder.annotations.MappedClass;
 import com.wentong.ladder.annotations.MappedField;
 import com.wentong.ladder.config.LadderConfig;
@@ -33,6 +34,10 @@ public class AnnotationScanner {
     public void scan() {
         String basePackage = ladderConfig.ladderScanBasePackage;
         log.info("系统启动，开始扫描包：{} 下的注解。", basePackage);
+        realScan(basePackage);
+    }
+
+    private static void realScan(String basePackage) {
         Set<Class<?>> classes = ClassUtil.scanPackage(basePackage);
         for (Class<?> clazz : classes) {
             boolean classWithAnnotation = AnnotationUtil.hasAnnotation(clazz, MappedClass.class);
@@ -50,5 +55,11 @@ public class AnnotationScanner {
             }
         }
     }
+
+    @VisibleForTesting
+    public void scan(String basePackage) {
+        realScan(basePackage);
+    }
+
 
 }
