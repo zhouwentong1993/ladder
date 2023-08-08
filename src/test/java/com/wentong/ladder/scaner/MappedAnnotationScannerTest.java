@@ -7,12 +7,12 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class AnnotationScannerTest {
+class MappedAnnotationScannerTest {
 
     @Test
     void scan() {
-        AnnotationScanner annotationScanner = new AnnotationScanner();
-        annotationScanner.scan("com.wentong.ladder");
+        MappedAnnotationScanner mappedAnnotationScanner = new MappedAnnotationScanner();
+        mappedAnnotationScanner.scan("com.wentong.ladder");
         assertEquals(2, MappingRegistry.get(Person1.class).size());
         assertEquals(1, MappingRegistry.get(Person2.class).size());
     }

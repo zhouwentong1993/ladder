@@ -62,6 +62,8 @@ public class ClassMappingHandler<S, T> implements MappingHandler<S, T> {
                             break;
                         case CONTEXT:
                             break;
+                        case REF_JAVA_CODE:
+
                         default:
                             break;
                     }

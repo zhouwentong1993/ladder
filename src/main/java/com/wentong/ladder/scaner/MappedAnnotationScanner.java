@@ -25,7 +25,7 @@ import java.util.Set;
 @Slf4j
 @Component
 @DependsOn("ladderConfig")
-public class AnnotationScanner {
+public class MappedAnnotationScanner {
 
     @Autowired
     private LadderConfig ladderConfig;
