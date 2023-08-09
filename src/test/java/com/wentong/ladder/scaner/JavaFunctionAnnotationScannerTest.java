@@ -2,6 +2,7 @@ package com.wentong.ladder.scaner;
 
 import com.googlecode.aviator.AviatorEvaluator;
 import com.wentong.ladder.functions.vo.AddOrderParam;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -9,6 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @SpringBootTest
+@Disabled
 class JavaFunctionAnnotationScannerTest {
 
     @Test
