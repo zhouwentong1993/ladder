@@ -1,36 +1,33 @@
 package com.wentong.ladder.functions;
 
+import cn.hutool.extra.spring.SpringUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.googlecode.aviator.runtime.function.FunctionUtils;
+import com.googlecode.aviator.runtime.type.AviatorObject;
 import com.wentong.ladder.annotations.JavaFunction;
 import com.wentong.ladder.entity.MetaHttpRequestEntity;
 import com.wentong.ladder.exceptions.ClassInitializeException;
+import com.wentong.ladder.functions.vo.AddOrderParam;
 import com.wentong.ladder.handler.MappingHandler;
 import com.wentong.ladder.handler.impl.ClassMappingHandler;
 import com.wentong.ladder.http.HttpGetter;
 import com.wentong.ladder.mapper.MetaHttpRequestMapper;
 import okhttp3.Response;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
 import java.util.Objects;
 
-/**
- * 获取预估价的自定义函数实现
- * @param <AddOrderParam> 待转换的对象，这里是下单对象
- * @param <BigDecimal> 转换成的对象，这里是预估价格，从预估价接口获得。
- */
-@JavaFunction
 @Component
-public class PrePriceFunctionDefinition<AddOrderParam, BigDecimal> implements FunctionDefinition<com.wentong.ladder.functions.vo.AddOrderParam, java.math.BigDecimal> {
-
-    @Autowired
-    private MetaHttpRequestMapper metaHttpRequestMapper;
+@JavaFunction
+public class PrePriceFunction extends LadderAbstractFunction {
 
     @Override
-    public java.math.BigDecimal apply(com.wentong.ladder.functions.vo.AddOrderParam addOrderParam) {
-        MetaHttpRequestEntity metaHttpRequestEntity = metaHttpRequestMapper.selectOne(Wrappers.<MetaHttpRequestEntity>lambdaQuery().eq(MetaHttpRequestEntity::getRefBusiness, "CREATE_ORDER_PRICE").eq(MetaHttpRequestEntity::getRefPlatform, addOrderParam.getPlatformType()));
+    public AviatorObject call(Map<String, Object> env, AviatorObject arg1) {
+        AddOrderParam addOrderParam = (AddOrderParam) FunctionUtils.getJavaObject(arg1, env);
+        MetaHttpRequestEntity metaHttpRequestEntity = SpringUtil.getBean("metaHttpRequestMapper", MetaHttpRequestMapper.class).selectOne(Wrappers.<MetaHttpRequestEntity>lambdaQuery().eq(MetaHttpRequestEntity::getRefBusiness, "CREATE_ORDER_PRICE").eq(MetaHttpRequestEntity::getRefPlatform, addOrderParam.getPlatformType()));
         Objects.requireNonNull(metaHttpRequestEntity, "metaHttpRequestEntity can not be null");
-        MappingHandler<com.wentong.ladder.functions.vo.AddOrderParam, Object> mappingHandler = new ClassMappingHandler<>();
+        MappingHandler<AddOrderParam, Object> mappingHandler = new ClassMappingHandler<>();
         try {
             Object mapping = mappingHandler.mapping(addOrderParam, Class.forName(metaHttpRequestEntity.getRefClass()));
             Response response = HttpGetter.getResponse(metaHttpRequestEntity, mapping);

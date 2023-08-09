@@ -2,8 +2,10 @@ package com.wentong.ladder.registry;
 
 import cn.hutool.extra.spring.SpringUtil;
 import com.googlecode.aviator.AviatorEvaluator;
+import com.googlecode.aviator.runtime.type.AviatorFunction;
 import com.googlecode.aviator.spring.SpringContextFunctionLoader;
 import com.wentong.ladder.exceptions.AviatorFunctionException;
+import com.wentong.ladder.utils.ReflectUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;
 
@@ -20,10 +22,11 @@ public class AviatorFunctionRegistry {
         AviatorEvaluator.addFunctionLoader(new SpringContextFunctionLoader(applicationContext));
     }
 
-    public static void register(String name, Class clazz) {
+    public static void register(String name, Class<?> clazz) {
         log.info("Register function: {} to registry.", name);
         try {
-            AviatorEvaluator.addInstanceFunctions(name, clazz);
+//            AviatorEvaluator.addInstanceFunctions(name, clazz);
+            AviatorEvaluator.addFunction((AviatorFunction) ReflectUtil.getNoArgsConstructor(clazz).newInstance());
         } catch (Exception e) {
             throw new AviatorFunctionException(e);
         }

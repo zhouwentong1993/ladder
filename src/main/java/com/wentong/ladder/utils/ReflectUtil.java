@@ -2,7 +2,7 @@ package com.wentong.ladder.utils;
 
 import java.lang.reflect.Constructor;
 
-public final class ReflectUtil {
+public final class ReflectUtil<T> {
 
     /**
      * 获取 clazz 中的无参构造方法

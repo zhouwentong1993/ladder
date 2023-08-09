@@ -13,6 +13,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.Set;
 
+import static com.wentong.ladder.utils.CommonUtil.makeFirstLetterLowerCase;
+
 @Slf4j
 @Component
 public class JavaFunctionAnnotationScanner {
@@ -41,18 +43,5 @@ public class JavaFunctionAnnotationScanner {
         }
     }
 
-    public static String makeFirstLetterLowerCase(String input) {
-        if (input == null || input.isEmpty()) {
-            return input;
-        }
-
-        char firstChar = input.charAt(0);
-        if (Character.isUpperCase(firstChar)) {
-            char lowerFirstChar = Character.toLowerCase(firstChar);
-            return lowerFirstChar + input.substring(1);
-        }
-
-        return input;
-    }
 
 }
