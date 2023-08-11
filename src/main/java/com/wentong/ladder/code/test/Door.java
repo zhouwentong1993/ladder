@@ -1,4 +1,4 @@
-package com.wentong.ladder.code;
+package com.wentong.ladder.code.test;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -17,9 +17,9 @@ public class HttpRequestLoggingInterceptor implements HttpRequestInterceptor {
 
     @Override
     public void afterRequest(Request request, Response response) {
-        log.info("request url:{}", request.url());
-        log.info("request body:{}", request.body());
-        log.info("response code:{}", response.code());
+//        log.info("request url:{}", request.url());
+//        log.info("request body:{}", request.body());
+//        log.info("response code:{}", response.code());
     }
 
     @Override

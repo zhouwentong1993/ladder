@@ -20,7 +20,7 @@ public class HttpGetter {
                     .build();
             return client.newCall(request).execute();
         } else if (Objects.equals(requestType, "POST")) {
-            RequestBody body = RequestBody.create(JSON.toJSONString(o), MediaType.get("application/json; charset=utf-8"));
+            RequestBody body = RequestBody.create(JSON.toJSONString(o), MediaType.get(metaHttpRequestEntity.getContentType() + "; charset=" + metaHttpRequestEntity.getCharacterEncoding()));
             Request request = new Request.Builder()
                     .url(metaHttpRequestEntity.getUrl())
                     .post(body)

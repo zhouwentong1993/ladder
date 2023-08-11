@@ -34,6 +34,7 @@ public class JavaFunctionAnnotationScanner {
     }
 
     private static void realScan(String basePackage) {
+        log.info("系统启动，开始扫描包：{} 下的注解。", basePackage);
         Set<Class<?>> classes = ClassUtil.scanPackage(basePackage);
         for (Class<?> clazz : classes) {
             boolean classWithAnnotation = AnnotationUtil.hasAnnotation(clazz, JavaFunction.class);

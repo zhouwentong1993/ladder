@@ -21,6 +21,7 @@ public class MetaRequestEntity implements Serializable {
     private String mappedType;
     private String className;
     private String refBusiness;
+    private String refPlatform;
     private Date createTime;
     private Date updateTime;
 

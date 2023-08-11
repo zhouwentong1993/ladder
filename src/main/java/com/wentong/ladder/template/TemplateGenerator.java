@@ -41,7 +41,7 @@ public class TemplateGenerator {
             // Step 3: 准备数据
             VelocityContext context = new VelocityContext();
             context.put("className", className);
-            context.put("package", "com.wentong.ladder.code");
+            context.put("package", "com.wentong.ladder.code." + v.get(0).getRefPlatform().toLowerCase());
             List<Map<String, String>> list = new ArrayList<>();
             v.forEach(metaRequestEntity -> {
                 Map<String, String> map = Map.of("name", metaRequestEntity.getFieldName(), "type", metaRequestEntity.getFieldType(), "expression", metaRequestEntity.getExpression(), "desc", metaRequestEntity.getDesc(), "mappedType", metaRequestEntity.getMappedType());
@@ -64,7 +64,7 @@ public class TemplateGenerator {
             String result = absolutePath.substring(0, lastIndex + 1);
 
             // Step 6: 输出到文件
-            String filePath = result + "src/main/java/com/wentong/ladder/code/" + className + ".java";
+            String filePath = result + "src/main/java/com/wentong/ladder/code/" + v.get(0).getRefPlatform().toLowerCase() + "/" + className + ".java";
             File file = FileUtil.writeUtf8String(generatedClassCode, filePath);
         });
 
