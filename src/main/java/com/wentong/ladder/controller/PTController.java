@@ -48,7 +48,6 @@ public class PTController {
 
         Response response = getResponse(metaHttpRequestEntity, JSONObject.from(o));
 
-        System.out.println(response.body().string());
         return response.body().string();
 
     }

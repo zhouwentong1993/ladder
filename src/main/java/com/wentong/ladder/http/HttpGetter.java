@@ -34,9 +34,8 @@ public class HttpGetter {
                     .url(metaHttpRequestEntity.getUrl())
                     .post(body)
                     .build();
-            try (Response response = CLIENT.newCall(request).execute()) {
-                return response;
-            }
+            return CLIENT.newCall(request).execute();
+
         } else {
             throw new IllegalArgumentException("不支持的协议类型" + requestType);
         }
