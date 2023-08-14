@@ -14,4 +14,6 @@ public interface RequestBodyGenerator {
 
     MediaType getMediaType();
 
+    boolean isSupport(String contentType);
+
 }

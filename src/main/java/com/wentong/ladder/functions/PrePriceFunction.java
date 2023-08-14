@@ -34,7 +34,7 @@ public class PrePriceFunction extends LadderAbstractFunction {
         MappingHandler<AddOrderParam, Object> mappingHandler = new ClassMappingHandler<>();
         try {
             Object mapping = mappingHandler.mapping(addOrderParam, Class.forName(metaHttpRequestEntity.getRefClass()));
-            Response response = HttpGetter.getResponse(metaHttpRequestEntity, mapping);
+            Response response = HttpGetter.getResponse(metaHttpRequestEntity, JSONObject.from(mapping));
             String responseSuccessJudgement = metaHttpRequestEntity.getResponseSuccessJudgement();
             boolean successResponse = (boolean) AviatorHelper.COMPILED_FUNCTION.apply(responseSuccessJudgement).execute(BeanUtil.beanToMap(response));
             // 是一个成功的响应，则对其进行映射

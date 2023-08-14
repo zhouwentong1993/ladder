@@ -1,6 +1,7 @@
 package com.wentong.ladder.controller;
 
 import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONObject;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.wentong.ladder.entity.MetaHttpRequestEntity;
 import com.wentong.ladder.handler.MappingHandler;
@@ -11,7 +12,6 @@ import com.wentong.ladder.vo.AddOrderParam;
 import com.wentong.ladder.vo.RawObject;
 import com.wentong.ladder.vo.TemporaryModel;
 import okhttp3.Response;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,8 +22,11 @@ import static com.wentong.ladder.http.HttpGetter.getResponse;
 @RequestMapping("pt")
 public class PTController {
 
-    @Autowired
-    private MetaHttpRequestMapper metaHttpRequestMapper;
+    private final MetaHttpRequestMapper metaHttpRequestMapper;
+
+    public PTController(MetaHttpRequestMapper metaHttpRequestMapper) {
+        this.metaHttpRequestMapper = metaHttpRequestMapper;
+    }
 
     @GetMapping("test")
     public String test() throws Exception {
@@ -43,7 +46,8 @@ public class PTController {
         Object o = ReflectUtil.getNoArgsConstructor(Class.forName(metaHttpRequestEntity.getRefClass())).newInstance();
         Object mapResult = mappingHandler.mapping(rawObject, o);
 
-        Response response = getResponse(metaHttpRequestEntity, o);
+        Response response = getResponse(metaHttpRequestEntity, JSONObject.from(o));
+
         System.out.println(response.body().string());
         return response.body().string();
 

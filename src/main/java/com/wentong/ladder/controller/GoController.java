@@ -1,5 +1,6 @@
 package com.wentong.ladder.controller;
 
+import com.alibaba.fastjson2.JSONObject;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.wentong.ladder.code.test.Address;
 import com.wentong.ladder.code.test.Door;
@@ -37,7 +38,7 @@ public class GoController {
         Object o = ReflectUtil.getNoArgsConstructor(Class.forName(refClass)).newInstance();
         Object mapResult = mappingHandler.mapping(rawObj, o);
 
-        return getResponse(metaHttpRequestEntity, o).body().string();
+        return getResponse(metaHttpRequestEntity, JSONObject.from(o)).body().string();
     }
 
 
