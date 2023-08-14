@@ -18,4 +18,12 @@ public class NormalTest {
         Assertions.assertEquals("/Users/zhouwentong/IdeaProjects/ladder/", result);
     }
 
+    @Test
+    void testString() {
+        String s1 = "prePriceFunction()";
+        String s2 = "addOrderParam";
+        String s3 = s1.substring(0, s1.indexOf("(") + 1) + s2 + s1.substring(s1.indexOf("(") + 1);
+        Assertions.assertEquals("prePriceFunction(addOrderParam)", s3);
+    }
+
 }

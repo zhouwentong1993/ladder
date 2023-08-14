@@ -15,6 +15,8 @@ import com.wentong.ladder.utils.ReflectUtil;
 import java.lang.reflect.Field;
 import java.util.Map;
 
+import static com.wentong.ladder.utils.CommonUtil.makeFirstLetterLowerCase;
+
 @SuppressWarnings("unchecked")
 public class ClassMappingHandler<S, T> implements MappingHandler<S, T> {
 
@@ -63,7 +65,13 @@ public class ClassMappingHandler<S, T> implements MappingHandler<S, T> {
                         case CONTEXT:
                             break;
                         case REF_JAVA_CODE:
-
+                            String className = makeFirstLetterLowerCase(source.getClass().getSimpleName());
+                            Map<String, Object> param = Map.of(className, source);
+                            String expression = w.expression();
+                            // 组成实际交由 Aviator 执行的表达式
+                            String realExpression = expression.substring(0, expression.indexOf("(") + 1) + className + expression.substring(expression.indexOf("(") + 1);
+                            dynaBean.set(w.refField().getName(), AviatorHelper.COMPILED_FUNCTION.apply(realExpression).execute(param));
+                            break;
                         default:
                             break;
                     }
