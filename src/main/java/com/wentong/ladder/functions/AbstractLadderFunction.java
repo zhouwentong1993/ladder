@@ -4,7 +4,7 @@ import com.googlecode.aviator.runtime.function.AbstractFunction;
 
 import static com.wentong.ladder.utils.CommonUtil.makeFirstLetterLowerCase;
 
-public abstract class LadderAbstractFunction extends AbstractFunction {
+public abstract class AbstractLadderFunction extends AbstractFunction {
 
     @Override
     public String getName() {

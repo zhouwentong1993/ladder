@@ -1,4 +1,4 @@
-package com.wentong.ladder.functions;
+package com.wentong.ladder.functions.preprice;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.extra.spring.SpringUtil;
@@ -11,6 +11,7 @@ import com.wentong.ladder.annotations.JavaFunction;
 import com.wentong.ladder.aviator.AviatorHelper;
 import com.wentong.ladder.entity.MetaHttpRequestEntity;
 import com.wentong.ladder.exceptions.ClassInitializeException;
+import com.wentong.ladder.functions.AbstractLadderFunction;
 import com.wentong.ladder.functions.vo.AddOrderParam;
 import com.wentong.ladder.handler.MappingHandler;
 import com.wentong.ladder.handler.impl.ClassMappingHandler;
@@ -24,7 +25,7 @@ import java.util.Objects;
 
 @Component
 @JavaFunction
-public class PrePriceFunction extends LadderAbstractFunction {
+public class PrePriceLadderFunction extends AbstractLadderFunction {
 
     @Override
     public AviatorObject call(Map<String, Object> env, AviatorObject arg1) {
