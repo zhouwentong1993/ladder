@@ -1,6 +1,7 @@
 package com.wentong.ladder.aviator;
 
 import cn.hutool.core.lang.Dict;
+import cn.hutool.extra.spring.SpringUtil;
 import com.googlecode.aviator.AviatorEvaluator;
 import com.googlecode.aviator.AviatorEvaluatorInstance;
 import com.googlecode.aviator.Expression;
@@ -19,7 +20,10 @@ public final class AviatorHelper {
     private static final AviatorEvaluatorInstance INSTANCE = AviatorEvaluator.getInstance();
 
     static {
-        INSTANCE.setOption(TRACE_EVAL, true);
+        // 在研发环境下，开启 Aviator 的 trace 功能
+        if (SpringUtil.getActiveProfile().equals("dev")) {
+            INSTANCE.setOption(TRACE_EVAL, true);
+        }
         INSTANCE.setOption(ALWAYS_PARSE_FLOATING_POINT_NUMBER_INTO_DECIMAL, true);
     }
 
