@@ -8,12 +8,20 @@ import com.googlecode.aviator.Expression;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
+import static com.googlecode.aviator.Options.ALWAYS_PARSE_FLOATING_POINT_NUMBER_INTO_DECIMAL;
+import static com.googlecode.aviator.Options.TRACE_EVAL;
+
 /**
  * Aviator 的一些操作
  */
 public final class AviatorHelper {
 
     private static final AviatorEvaluatorInstance INSTANCE = AviatorEvaluator.getInstance();
+
+    static {
+        INSTANCE.setOption(TRACE_EVAL, true);
+        INSTANCE.setOption(ALWAYS_PARSE_FLOATING_POINT_NUMBER_INTO_DECIMAL, true);
+    }
 
     private AviatorHelper() {
     }

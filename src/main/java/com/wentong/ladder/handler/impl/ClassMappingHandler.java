@@ -11,6 +11,7 @@ import com.wentong.ladder.interceptor.LoggingMappingInterceptor;
 import com.wentong.ladder.interceptor.MappingInterceptor;
 import com.wentong.ladder.registry.MappingRegistry;
 import com.wentong.ladder.utils.ReflectUtil;
+import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.Field;
 import java.util.Map;
@@ -18,6 +19,7 @@ import java.util.Map;
 import static com.wentong.ladder.utils.CommonUtil.makeFirstLetterLowerCase;
 
 @SuppressWarnings("unchecked")
+@Slf4j
 public class ClassMappingHandler<S, T> implements MappingHandler<S, T> {
 
     // 默认的是 log 拦截器，可以通过 set 方法修改。
@@ -46,6 +48,7 @@ public class ClassMappingHandler<S, T> implements MappingHandler<S, T> {
             var mappingFieldWrappers = MappingRegistry.get(clazz);
             if (CollUtil.isNotEmpty(mappingFieldWrappers)) {
                 mappingFieldWrappers.forEach(w -> {
+                    log.info("Start mapping field:{}", w.refField().getName());
                     MappedType mappedType = w.mappedType();
                     switch (mappedType) {
                         case EXPRESSION:
