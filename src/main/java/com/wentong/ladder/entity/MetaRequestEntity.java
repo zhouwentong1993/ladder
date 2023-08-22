@@ -1,6 +1,8 @@
 package com.wentong.ladder.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -12,6 +14,7 @@ import java.util.Date;
 @Data
 public class MetaRequestEntity implements Serializable {
 
+    @TableId(type = IdType.AUTO)
     private Long id;
     private String fieldName;
     private String fieldType;
@@ -22,6 +25,7 @@ public class MetaRequestEntity implements Serializable {
     private String className;
     private String refBusiness;
     private String refPlatform;
+    private boolean deleted;
     private Date createTime;
     private Date updateTime;
 

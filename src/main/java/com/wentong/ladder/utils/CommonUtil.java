@@ -17,4 +17,18 @@ public class CommonUtil {
         return input;
     }
 
+    public static String makeFirstLetterUpperCase(String input) {
+        if (input == null || input.isEmpty()) {
+            return input;
+        }
+
+        char firstChar = input.charAt(0);
+        if (Character.isLowerCase(firstChar)) {
+            char lowerFirstChar = Character.toUpperCase(firstChar);
+            return lowerFirstChar + input.substring(1);
+        }
+
+        return input;
+    }
+
 }

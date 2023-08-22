@@ -7,14 +7,6 @@ public class StoreChannelBean {
 
     private Integer id;
 
-    private String hualalaShopid;
-
-
-    private String hualalaGroupid;
-
-    private String hualalaGroupName;
-
-
     private String thirdGroupid;
 
 
