@@ -12,7 +12,6 @@ public final class ReflectUtil<T> {
         Constructor<?>[] constructors = clazz.getDeclaredConstructors();
 
         // 遍历构造方法数组，找到无参数的构造方法
-        Constructor<?> noArgsConstructor = null;
         for (Constructor<?> constructor : constructors) {
             if (constructor.getParameterCount() == 0) {
                 return constructor;
