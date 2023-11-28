@@ -19,7 +19,7 @@ public class PT365CreateOrderPrice {
 
     @MappedField(expression = "temporaryModel.storeChannelBean.special_key", desc = "扣款的365账号", type = MappedType.EXPRESSION)
     private String user365Id;
-    @MappedField(expression = "str(temporaryModel.storeChannelBean.transportLongitude)", desc = "发货地坐标经度", type = MappedType.EXPRESSION)
+    @MappedField(expression = "str(temporaryModel.storeChannelBean.transportLongitude)", desc = "发货地坐标经度", type = MappedType.EXPRESSION, validate = "")
     private String senderAddressLon;
     @MappedField(expression = "temporaryModel.storeChannelBean.transportLatitude", desc = "发货地坐标纬度", type = MappedType.EXPRESSION)
     private String senderAddressLat;

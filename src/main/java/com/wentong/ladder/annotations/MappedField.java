@@ -26,4 +26,10 @@ public @interface MappedField {
      * 映射类型
      */
     MappedType type();
+
+    /**
+     * 校验规则，Aviator 表达式格式。
+     * 如果为空，则不校验。
+     */
+    String validate() default "";
 }

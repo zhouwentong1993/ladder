@@ -3,6 +3,7 @@ package com.wentong.ladder.handler.impl;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.DynaBean;
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.StrUtil;
 import com.wentong.ladder.aviator.AviatorHelper;
 import com.wentong.ladder.enums.MappedType;
 import com.wentong.ladder.exceptions.ClassInitializeException;
@@ -49,6 +50,9 @@ public class ClassMappingHandler<S, T> implements MappingHandler<S, T> {
             if (CollUtil.isNotEmpty(mappingFieldWrappers)) {
                 mappingFieldWrappers.forEach(w -> {
                     log.info("Start mapping field:{}", w.refField().getName());
+                    if (StrUtil.isNotBlank(w.validate())) { // 执行校验逻辑
+                        Object validateResult = AviatorHelper.COMPILED_FUNCTION.apply(w.validate()).execute(sourceMap);
+                    }
                     MappedType mappedType = w.mappedType();
                     switch (mappedType) {
                         case EXPRESSION:

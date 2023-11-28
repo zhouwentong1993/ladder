@@ -47,7 +47,7 @@ public class MappedAnnotationScanner {
                 for (Field field : fields) {
                     MappedField annotation = field.getAnnotation(MappedField.class);
                     if (annotation != null) {
-                        MappingFieldWrapper mappingFieldWrapper = new MappingFieldWrapper(annotation.expression(), annotation.desc(), annotation.type(), field);
+                        MappingFieldWrapper mappingFieldWrapper = new MappingFieldWrapper(annotation.expression(), annotation.desc(), annotation.validate(), annotation.type(), field);
                         mappingFieldWrapperList.add(mappingFieldWrapper);
                     }
                 }

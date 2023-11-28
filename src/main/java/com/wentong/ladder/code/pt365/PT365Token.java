@@ -1,11 +1,11 @@
 package com.wentong.ladder.code.pt365;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import com.wentong.ladder.annotations.MappedClass;
 import com.wentong.ladder.annotations.MappedField;
 import com.wentong.ladder.enums.MappedType;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * Auto generated class.
