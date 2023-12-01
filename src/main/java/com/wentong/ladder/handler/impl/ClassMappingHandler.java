@@ -26,10 +26,15 @@ import static com.wentong.ladder.utils.CommonUtil.makeFirstLetterLowerCase;
 public class ClassMappingHandler<S, T> implements MappingHandler<S, T> {
 
     // 默认的是 log 拦截器，可以通过 set 方法修改。
-    private MappingInterceptor mappingInterceptor = new LoggingMappingInterceptor();
 
-    public void setMappingInterceptor(MappingInterceptor mappingInterceptor) {
+    private final MappingInterceptor mappingInterceptor;
+
+    public ClassMappingHandler(MappingInterceptor mappingInterceptor) {
         this.mappingInterceptor = mappingInterceptor;
+    }
+
+    public ClassMappingHandler() {
+        this.mappingInterceptor = new LoggingMappingInterceptor();
     }
 
     @Override
@@ -64,7 +69,7 @@ public class ClassMappingHandler<S, T> implements MappingHandler<S, T> {
                         case CONSTANT:
                             constantFieldMapping(w.refField(), w.expression(), dynaBean);
                             break;
-                        case CONTEXT:
+                        case CONTEXT: // 暂不支持上下文格式。
                             break;
                         case REF_JAVA_CODE:
                             javaCodeFieldMapping(source, dynaBean, w);
@@ -84,7 +89,7 @@ public class ClassMappingHandler<S, T> implements MappingHandler<S, T> {
 
     }
 
-    private static void javaCodeFieldMapping(S source, DynaBean dynaBean, MappingFieldWrapper w) {
+    private void javaCodeFieldMapping(S source, DynaBean dynaBean, MappingFieldWrapper w) {
         String className = makeFirstLetterLowerCase(source.getClass().getSimpleName());
         Map<String, Object> param = Map.of(className, source);
         String expression = w.expression();
