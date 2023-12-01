@@ -6,6 +6,7 @@ import com.googlecode.aviator.AviatorEvaluator;
 import com.googlecode.aviator.AviatorEvaluatorInstance;
 import com.googlecode.aviator.Expression;
 
+import java.util.Objects;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
@@ -21,7 +22,7 @@ public final class AviatorHelper {
 
     static {
         // 在研发环境下，开启 Aviator 的 trace 功能
-        if (SpringUtil.getActiveProfile().equals("dev")) {
+        if (Objects.equals(SpringUtil.getActiveProfile(), "dev")) {
             INSTANCE.setOption(TRACE_EVAL, true);
         }
         INSTANCE.setOption(ALWAYS_PARSE_FLOATING_POINT_NUMBER_INTO_DECIMAL, true);

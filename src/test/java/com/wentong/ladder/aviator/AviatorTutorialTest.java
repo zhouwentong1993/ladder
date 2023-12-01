@@ -7,6 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.Map;
+
 /**
  * 一些针对于 Aviator 的测试研究
  */
@@ -46,6 +48,14 @@ public class AviatorTutorialTest {
         String expression = "let d = new com.wentong.ladder.expression.Door(); d.frontDoor = '前门';d";
         Object execute = AviatorHelper.COMPILED_FUNCTION.apply(expression).execute();
         Assertions.assertEquals("前门", ((Door) execute).getFrontDoor());
+    }
+
+    @Test
+    void testBooleanObj() {
+        String expression = "age > 100";
+        Map<String, Object> map = Map.of("age", 1000);
+        boolean execute = (boolean) AviatorHelper.COMPILED_FUNCTION.apply(expression).execute(map);
+        Assertions.assertTrue(execute);
     }
 
 }
