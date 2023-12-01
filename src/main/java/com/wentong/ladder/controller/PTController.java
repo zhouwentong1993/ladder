@@ -75,8 +75,7 @@ public class PTController {
         AddOrderParam addOrderParam = JSON.parseObject(addStr, AddOrderParam.class);
         String tem = "{\"isNew\":1,\"storeChannelBean\":{\"appKey\":\"19acd509c68947b8b7b30672976622d0\",\"areaName\":\"田家庵区\",\"auditStatus\":40,\"city\":\"淮南市\",\"cityCode\":\"\",\"equityAccount\":\"\",\"hualalaGroupName\":\"集团\",\"hualalaGroupid\":\"288288\",\"hualalaShopid\":\"70854\",\"id\":273307,\"isYRAcount\":0,\"isYuRechage\":0,\"isgroupByding\":0,\"isplayArea\":\"0\",\"platformType\":103,\"positionSource\":3,\"province\":\"340000\",\"secret\":\"1992keyxld\",\"special_key\":\"17611189283\",\"subPlatformType\":\"01\",\"thirdProductType\":\"\",\"thirdShopid\":\"09476dee0e837sssss877f0df61ddf683ee4\",\"transportAddress\":\"西门龙x吞口熊10号楼137\",\"transportLatitude\":\"41.794218\",\"transportLongitude\":\"123.393448\",\"transportName\":\"吞口熊の牛排手作意面（淮南店）\",\"transportTel\":\"130463\",\"type\":2},\"thirdOrderID\":\"726900125862496242\",\"thirdShopID\":\"09476deef0df61ddf683ee4\"}";
         TemporaryModel temporaryModel = JSON.parseObject(tem, TemporaryModel.class);
-        RawObject rawObject = new RawObject(addOrderParam, temporaryModel);
-        return rawObject;
+        return new RawObject(addOrderParam, temporaryModel);
     }
 
 }
