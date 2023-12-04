@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * 对 HTTP 接口进行映射的过程，返回值为固定的 HttpMappingVo，Vo 中的 data 属性是真正对应的业务对象。
@@ -23,7 +24,7 @@ import java.util.Map;
  */
 @Slf4j
 @SuppressWarnings("all")
-public class AntiHttpMappingHandler<S, T> implements MappingHandler<S, HttpMappingVo> {
+public class AntiHttpMappingHandler<S, T> implements MappingHandler<S, T> {
 
     private final MappingInterceptor mappingInterceptor;
 
@@ -40,34 +41,39 @@ public class AntiHttpMappingHandler<S, T> implements MappingHandler<S, HttpMappi
     }
 
     @Override
-    public HttpMappingVo<?> mapping(S source, Class<HttpMappingVo> clz) {
+    public T mapping(S source, Class<T> clz) {
         try {
-            return mapping(source, (HttpMappingVo) ReflectUtil.getNoArgsConstructor(clz).newInstance());
+            return mapping(source, (T) ReflectUtil.getNoArgsConstructor(clz).newInstance());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
-    public HttpMappingVo<?> mapping(S source, HttpMappingVo target) {
+    public T mapping(S source, T target) {
         try {
             mappingInterceptor.beforeMapping(source, target);
             DynaBean dynaBean = DynaBean.create(target);
             Map<String, Object> sourceMap = BeanUtil.beanToMap(source);
             Class<?> clazz = target.getClass();
+            if (Objects.equals(clazz.getName(), HttpMappingVo.class)) {
+                MappingFieldWrapper successWrapper = select(clazz.getField("success"));
+                realMapping(source, dynaBean, sourceMap, clazz, successWrapper);
+                boolean success = dynaBean.get("success");
+                if (success) { // 如果成功，将数据映射到 data 字段
+                    MappingFieldWrapper dataWrapper = select(clazz.getField("data"));
+                    realMapping(source, dynaBean, sourceMap, clazz, dataWrapper);
+                } else { // 如果失败，将数据映射到 message
+                    MappingFieldWrapper messageWrapper = select(clazz.getField("message"));
+                    realMapping(source, dynaBean, sourceMap, clazz, messageWrapper);
+                }
+            } else { // 处理普通映射
 
-            MappingFieldWrapper successWrapper = select(clazz.getField("success"));
-            realMapping(source, dynaBean, sourceMap, clazz, successWrapper);
-            boolean success = dynaBean.get("success");
-            if (success) { // 如果成功，将数据映射到 data 字段
-                MappingFieldWrapper dataWrapper = select(clazz.getField("data"));
-                realMapping(source, dynaBean, sourceMap, clazz, dataWrapper);
-            } else { // 如果失败，将数据映射到 message
-                MappingFieldWrapper messageWrapper = select(clazz.getField("message"));
-                realMapping(source, dynaBean, sourceMap, clazz, messageWrapper);
             }
 
-            HttpMappingVo bean = dynaBean.getBean();
+
+
+            T bean = dynaBean.getBean();
             mappingInterceptor.afterMapping(source, bean);
             return bean;
         } catch (Exception t) {
