@@ -1,5 +1,7 @@
 package com.wentong.ladder.handler;
 
+import com.wentong.ladder.registry.MappingFieldWrapper;
+
 import java.util.Map;
 
 /**
@@ -10,6 +12,6 @@ import java.util.Map;
  */
 public interface AntiMappingHandler<S, T> {
 
-    T mapping(S s, Map<String, Object> rules);
+    T mapping(S s, Class<T> clz, Map<String, MappingFieldWrapper> rules);
 
 }

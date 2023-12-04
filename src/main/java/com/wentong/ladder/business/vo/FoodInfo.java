@@ -1,4 +1,4 @@
-package com.wentong.ladder.vo;
+package com.wentong.ladder.business.vo;
 
 import lombok.Data;
 
