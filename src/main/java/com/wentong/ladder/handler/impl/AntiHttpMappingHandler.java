@@ -22,7 +22,8 @@ import java.util.Map;
  * @param <T>
  */
 @Slf4j
-public class AntiHttpMappingHandler<S, T> implements MappingHandler<S, HttpMappingVo<?>> {
+@SuppressWarnings("all")
+public class AntiHttpMappingHandler<S, T> implements MappingHandler<S, HttpMappingVo> {
 
     private final MappingInterceptor mappingInterceptor;
 
@@ -39,7 +40,7 @@ public class AntiHttpMappingHandler<S, T> implements MappingHandler<S, HttpMappi
     }
 
     @Override
-    public HttpMappingVo<?> mapping(S source, Class<HttpMappingVo<?>> clz) {
+    public HttpMappingVo<?> mapping(S source, Class<HttpMappingVo> clz) {
         try {
             return mapping(source, (HttpMappingVo) ReflectUtil.getNoArgsConstructor(clz).newInstance());
         } catch (Exception e) {
@@ -48,7 +49,7 @@ public class AntiHttpMappingHandler<S, T> implements MappingHandler<S, HttpMappi
     }
 
     @Override
-    public HttpMappingVo<?> mapping(S source, HttpMappingVo<?> target) {
+    public HttpMappingVo<?> mapping(S source, HttpMappingVo target) {
         try {
             mappingInterceptor.beforeMapping(source, target);
             DynaBean dynaBean = DynaBean.create(target);
