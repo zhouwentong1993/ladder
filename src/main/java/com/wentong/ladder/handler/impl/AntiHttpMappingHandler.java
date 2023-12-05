@@ -2,6 +2,8 @@ package com.wentong.ladder.handler.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.DynaBean;
+import com.alibaba.fastjson2.JSONObject;
+import com.wentong.ladder.aviator.AviatorHelper;
 import com.wentong.ladder.exceptions.MappingException;
 import com.wentong.ladder.handler.MappingHandler;
 import com.wentong.ladder.interceptor.LoggingMappingInterceptor;
@@ -56,7 +58,7 @@ public class AntiHttpMappingHandler<S, T> implements MappingHandler<S, T> {
             DynaBean dynaBean = DynaBean.create(target);
             Map<String, Object> sourceMap = BeanUtil.beanToMap(source);
             Class<?> clazz = target.getClass();
-            if (Objects.equals(clazz.getName(), HttpMappingVo.class)) {
+            if (Objects.equals(clazz.getName(), HttpMappingVo.class.getName())) {
                 MappingFieldWrapper successWrapper = select(clazz.getField("success"));
                 realMapping(source, dynaBean, sourceMap, clazz, successWrapper);
                 boolean success = dynaBean.get("success");
@@ -68,11 +70,9 @@ public class AntiHttpMappingHandler<S, T> implements MappingHandler<S, T> {
                     realMapping(source, dynaBean, sourceMap, clazz, messageWrapper);
                 }
             } else { // 处理普通映射
-
+                Map<Object, Object> mappedResponse = (Map<Object, Object>) AviatorHelper.COMPILED_FUNCTION.apply(select(HttpMappingVo.class.getField("data")).expression()).execute((JSONObject) source);
+                dynaBean.set("data", mappedResponse);
             }
-
-
-
             T bean = dynaBean.getBean();
             mappingInterceptor.afterMapping(source, bean);
             return bean;

@@ -5,10 +5,12 @@ import com.wentong.ladder.enums.MappedType;
 import com.wentong.ladder.handler.MappingHandler;
 import com.wentong.ladder.registry.MappingFieldWrapper;
 import com.wentong.ladder.vo.HttpMappingVo;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Map;
 
 class AntiHttpMappingHandlerTest {
 
@@ -26,7 +28,7 @@ class AntiHttpMappingHandlerTest {
     void testMapping() throws Exception {
         List<MappingFieldWrapper> mappingFieldWrappers = List.of(
                 new MappingFieldWrapper("errorcode == 0", "success判断", null, MappedType.EXPRESSION, HttpMappingVo.class.getField("success")),
-                new MappingFieldWrapper("data.totalCost", "预估价", null, MappedType.EXPRESSION, HttpMappingVo.class.getField("data")),
+                new MappingFieldWrapper("let map = seq.map(\"deliveryFee\",decimal(data.totalCost)-decimal(data.defCouCost),\"distance\",data.totalKm); if(decimal(data.defCouCost)!=0) {map[\"discountFee\"]=decimal(data.defCouCost);} return map;", "预估价", null, MappedType.EXPRESSION, HttpMappingVo.class.getField("data")),
                 new MappingFieldWrapper("message", "错误响应", null, MappedType.EXPRESSION, HttpMappingVo.class.getField("message"))
 
         );
@@ -51,7 +53,8 @@ class AntiHttpMappingHandlerTest {
         JSONObject jsonObject = JSONObject.parseObject(sourceStr);
 
         HttpMappingVo mapping = mappingHandler.mapping(jsonObject, HttpMappingVo.class);
-        System.out.println(mapping);
+        Assertions.assertTrue(mapping.success);
+        Assertions.assertEquals("11.19", ((Map) mapping.data.get("data")).get("distance"));
 
     }
 }
