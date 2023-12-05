@@ -27,9 +27,9 @@ class AntiHttpMappingHandlerTest {
     @Test
     void testMapping() throws Exception {
         List<MappingFieldWrapper> mappingFieldWrappers = List.of(
-                new MappingFieldWrapper("errorcode == 0", "success判断", null, MappedType.EXPRESSION, HttpMappingVo.class.getField("success")),
-                new MappingFieldWrapper("let map = seq.map(\"deliveryFee\",decimal(data.totalCost)-decimal(data.defCouCost),\"distance\",data.totalKm); if(decimal(data.defCouCost)!=0) {map[\"discountFee\"]=decimal(data.defCouCost);} return map;", "预估价", null, MappedType.EXPRESSION, HttpMappingVo.class.getField("data")),
-                new MappingFieldWrapper("message", "错误响应", null, MappedType.EXPRESSION, HttpMappingVo.class.getField("message"))
+                new MappingFieldWrapper("errorcode == 0", "success判断", null, MappedType.EXPRESSION, HttpMappingVo.class.getDeclaredField("success")),
+                new MappingFieldWrapper("let map = seq.map(\"deliveryFee\",decimal(data.totalCost)-decimal(data.defCouCost),\"distance\",data.totalKm); if(decimal(data.defCouCost)!=0) {map[\"discountFee\"]=decimal(data.defCouCost);} return map;", "预估价", null, MappedType.EXPRESSION, HttpMappingVo.class.getDeclaredField("data")),
+                new MappingFieldWrapper("message", "错误响应", null, MappedType.EXPRESSION, HttpMappingVo.class.getDeclaredField("message"))
 
         );
         MappingHandler<JSONObject, HttpMappingVo> mappingHandler = new AntiHttpMappingHandler<>(mappingFieldWrappers);
