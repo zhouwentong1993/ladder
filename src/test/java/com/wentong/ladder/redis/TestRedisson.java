@@ -18,6 +18,7 @@ public class TestRedisson {
     @Test
     void testBasicRedis() {
         Assertions.assertNull(redissonClient.getBucket(RandomUtil.randomString(12)).get());
+
     }
 
 }
