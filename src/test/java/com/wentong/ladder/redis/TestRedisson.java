@@ -1,5 +1,7 @@
 package com.wentong.ladder.redis;
 
+import cn.hutool.core.util.RandomUtil;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.redisson.api.RedissonClient;
@@ -15,8 +17,7 @@ public class TestRedisson {
 
     @Test
     void testBasicRedis() {
-        System.out.println(redissonClient.getBucket("a").get());
-
+        Assertions.assertNull(redissonClient.getBucket(RandomUtil.randomString(12)).get());
     }
 
 }
